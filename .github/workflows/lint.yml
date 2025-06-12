@@ -16,9 +16,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Fetch main branch
-        run: git fetch origin main:main
-
       - name: Lint Code Base
         uses: super-linter/super-linter@v6
         env:
