@@ -9,15 +9,15 @@
   margin-bottom: 15rem;
 }
 
-.main__title {
+.main-title {
   font-size: 40px;
 }
 
-.main__subtitle {
+.main-subtitle {
   font-size: 20px;
 }
 
-.main_function__title {
+.main-function-title {
   font-size: 25px;
   font-weight: bold;
 }

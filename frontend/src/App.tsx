@@ -28,11 +28,11 @@ export function App() {
   return (
     <div>
       <div className="title">
-        <h1 className="main__title">ORIENTED OBJECT DETECTION FOR TABLE RECOGNITION</h1>
-        <p className="main__subtitle">Распознование таблицы и угла наклона.</p>
+        <h1 className="main-title">ORIENTED OBJECT DETECTION FOR TABLE RECOGNITION</h1>
+        <p className="main-subtitle">Распознование таблицы и угла наклона.</p>
       </div>
-      <div className="main_function">
-        <h2 className="main_function__title">Обработка файла</h2>
+      <div className="main-function">
+        <h2 className="main-function-title">Обработка файла</h2>
 
         {!file && <FilePicker onFileSelect={handleFileSelect} />}
         {file && !isProcessing && !isReady && (
