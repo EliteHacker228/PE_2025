@@ -26,7 +26,7 @@ export function App() {
   }
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
+    <div>
       <div className="title">
         <h1 className="main__title">ORIENTED OBJECT DETECTION FOR TABLE RECOGNITION</h1>
         <p className="main__subtitle">Распознование таблицы и угла наклона.</p>
