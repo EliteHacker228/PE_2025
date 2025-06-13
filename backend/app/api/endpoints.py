@@ -16,4 +16,3 @@ async def detect_and_rotate(file: UploadFile = File(...)):
     output_path = process_image_file(temp_filename)
 
     return FileResponse(output_path, filename="rotated_output.jpg")
-

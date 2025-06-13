@@ -6,10 +6,12 @@ from app.core.config import MODEL_PATH, RESULTS_DIR
 
 model = YOLO(MODEL_PATH)
 
+
 def get_angle_to_rotate(obb) -> float:
     xywhr = obb.xywhr[0]
     rotation_rad = xywhr[-1]
     return round(rotation_rad.item() * (180 / np.pi), 2)
+
 
 def rotate_image(image, angle):
     h, w = image.shape[:2]
@@ -26,6 +28,7 @@ def rotate_image(image, angle):
 
     return cv2.warpAffine(image, matrix, (new_w, new_h))
 
+
 def process_image_file(image_path: str) -> str:
     image = cv2.imread(image_path)
     results = model(image)
@@ -41,4 +44,3 @@ def process_image_file(image_path: str) -> str:
     output_path = os.path.join(RESULTS_DIR, f"rotated_{filename}")
     cv2.imwrite(output_path, rotated)
     return output_path
-
