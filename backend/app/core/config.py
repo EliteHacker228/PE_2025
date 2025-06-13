@@ -1,15 +1,14 @@
 import os
 from pathlib import Path
 
-# Базовая директория проекта
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# Базовая директория проекта (до backend/)
+BASE_DIR = Path(__file__).resolve().parent.parent.parent  # Правильный путь
 
-# Пути к директориям и файлам
+# Пути к файлам
 MODEL_PATH = os.path.join(BASE_DIR, "models", "k_fold_split_0.pt")
-
-TEMP_DIR = os.path.join(BASE_DIR, "temp")
 RESULTS_DIR = os.path.join(BASE_DIR, "results")
+TEMP_DIR = os.path.join(BASE_DIR, "temp")
 
-# Убедимся, что директории существуют
-os.makedirs(TEMP_DIR, exist_ok=True)
+# Создаём директории один раз
 os.makedirs(RESULTS_DIR, exist_ok=True)
+os.makedirs(TEMP_DIR, exist_ok=True)
