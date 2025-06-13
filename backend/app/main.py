@@ -1,14 +1,20 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException  # Добавьте HTTPException
+from fastapi import (
+    FastAPI,
+    UploadFile,
+    File,
+    HTTPException,
+    status
+)
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.endpoints import router as api_router
-from app.services.detector import process_image_file  # Импорт функции обработки
+from app.services.detector import process_image_file
 import os  # Добавьте импорт os
 
 app = FastAPI(
     title="Table Detector Service",
-    description="Сервис определения таблиц и корректировки поворота сканов документов",
-    version="1.0.0"
-)
+    description="Сервис определения таблиц и корректировки поворота сканов",
+    version="1.0.0")
+
 
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
