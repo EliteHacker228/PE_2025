@@ -2,10 +2,16 @@ import cv2
 import numpy as np
 import os
 from ultralytics import YOLO
-from app.core.config import MODEL_PATH, RESULTS_DIR
+from app.core.config import MODEL_PATH, RESULTS_DIR, BASE_DIR
 
 print("MODEL_PATH value:")
 print(MODEL_PATH)
+
+print("Полный список файлов от BASE_DIR:")
+for root, dirs, files in os.walk(BASE_DIR):
+    for f in files:
+        full_path = os.path.join(root, f)
+        print(full_path)
 
 model = YOLO(MODEL_PATH)
 
