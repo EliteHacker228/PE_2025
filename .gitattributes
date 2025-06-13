@@ -1,1 +1,2 @@
 models/k_fold_split_0.pt filter=lfs diff=lfs merge=lfs -text
+backend/models/k_fold_split_0.pt filter=lfs diff=lfs merge=lfs -text
