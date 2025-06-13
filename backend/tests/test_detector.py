@@ -4,7 +4,11 @@ import tempfile
 import os
 import pytest
 from unittest.mock import MagicMock, patch
-from app.services.detector import get_angle_to_rotate, rotate_image, process_image_file
+from app.services.detector import (
+    get_angle_to_rotate,
+    rotate_image,
+    process_image_file
+)
 
 
 # 1. Тест расчета угла поворота
