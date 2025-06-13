@@ -9,6 +9,8 @@ print(MODEL_PATH)
 
 print("Полный список файлов от BASE_DIR:")
 for root, dirs, files in os.walk(BASE_DIR):
+    dirs[:] = [d for d in dirs if d != ".venv"]
+
     for f in files:
         full_path = os.path.join(root, f)
         print(full_path)
