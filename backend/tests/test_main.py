@@ -21,9 +21,7 @@ def test_image_processing_flow(tmp_path):
     cv2.imwrite(str(test_img), np.zeros((100, 100, 3), dtype=np.uint8))
 
     with open(test_img, "rb") as f:
-        response = client.post(
-            "/upload", files={"file": ("test.jpg", f, "image/jpeg")}
-        )
+        response = client.post("/upload", files={"file": ("test.jpg", f, "image/jpeg")})
 
     assert response.status_code == 200
     assert "processed_image" in response.json()
