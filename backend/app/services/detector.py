@@ -6,6 +6,9 @@ from app.core.config import MODEL_PATH, RESULTS_DIR
 
 model = YOLO(MODEL_PATH)
 
+print("MODEL_PATH value:")
+print(MODEL_PATH)
+
 
 def get_angle_to_rotate(obb) -> float:
     xywhr = obb.xywhr[0]
