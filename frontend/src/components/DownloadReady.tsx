@@ -1,12 +1,15 @@
 interface DownloadReadyProps {
-    onDownload: () => void
+    downloadUrl: string
+    filename: string
 }
 
-export const DownloadReady: React.FC<DownloadReadyProps> = ({ onDownload }) => {
+export const DownloadReady: React.FC<DownloadReadyProps> = ({ downloadUrl, filename }) => {
     return (
-        <div>
+        <div className="download-ready">
             <p>Файл готов!</p>
-            <button onClick={onDownload}>Скачать готовый файл</button>
+            <a href={downloadUrl} download={filename}>
+                <button data-testid="down-file" className="file-button pick-button reset-button">Скачать готовый файл</button>
+            </a>
         </div>
     )
 }

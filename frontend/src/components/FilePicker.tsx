@@ -1,20 +1,41 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 
 interface FilePickerProps {
-    onFileSelect: (file: File) => void
+  onFileSelect: (file: File) => void
 }
 
 export const FilePicker: React.FC<FilePickerProps> = ({ onFileSelect }) => {
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0]
-        if (file) {
-            onFileSelect(file)
-        }
-    }
+  const inputRef = useRef<HTMLInputElement>(null)
+  const [fileName, setFileName] = useState<string | null>(null)
 
-    return (
-        <div className="file_picker">
-            <input className="input-file" type="file" name='image' onChange={handleChange} />
-        </div>
-    )
+  const handleButtonClick = () => {
+    inputRef.current?.click()
+  }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      onFileSelect(file)
+      setFileName(file.name)
+    }
+  }
+
+  return (
+    <div className="file-picker">
+      <button type="button" className="file-button pick-button" onClick={handleButtonClick}>
+        Выбрать файл
+      </button>
+      <input
+        type="file"
+        ref={inputRef}
+        onChange={handleChange}
+        accept="image/*"
+        style={{ display: 'none' }}
+        data-testid="file-input"
+      />
+      {fileName && (
+        <p className="file-name">Выбран файл: <strong>{fileName}</strong></p>
+      )}
+    </div>
+  )
 }
