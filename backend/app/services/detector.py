@@ -47,4 +47,3 @@ def process_image_file(image_path: str) -> str:
     output_path = os.path.join(RESULTS_DIR, f"rotated_{filename}")
     cv2.imwrite(output_path, rotated)
     return output_path
-    
