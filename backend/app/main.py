@@ -1,10 +1,7 @@
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import os
 
 from app.api.endpoints import router as api_router
-from app.services.detector import process_image_file
-
 
 app = FastAPI(
     title="Table Detector Service",
