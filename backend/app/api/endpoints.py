@@ -1,44 +1,63 @@
+import os
 import shutil
 import uuid
-import os
-from fastapi import APIRouter, UploadFile, File, BackgroundTasks
+from pathlib import Path
+
+from fastapi import APIRouter, UploadFile, File, BackgroundTasks, HTTPException
 from fastapi.responses import FileResponse
+
 from app.services.detector import process_image_file
 
 router = APIRouter()
 
 
-@router.post("/detect-rotate/", response_class=FileResponse)  # Убедитесь что это FileResponse
+@router.post("/detect-rotate/", response_class=FileResponse)
 async def upload_file(
         file: UploadFile = File(...),
-        background_tasks: BackgroundTasks = BackgroundTasks()
+        background_tasks: BackgroundTasks = BackgroundTasks(),
 ):
+    """Endpoint for image processing with automatic rotation detection."""
+    temp_filename = f"temp_{uuid.uuid4().hex}.jpg"
+    output_path = None
+
     try:
-        # Сохраняем временный файл
-        temp_filename = f"temp_{uuid.uuid4().hex}.jpg"
+        # Save temporary file using context manager
         with open(temp_filename, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
-        # Обрабатываем файл (должен вернуть путь к обработанному файлу)
+        # Process the image
         output_path = process_image_file(temp_filename)
 
-        if not os.path.exists(output_path):
-            raise HTTPException(500, "Output file was not created")
+        if not Path(output_path).exists():
+            raise HTTPException(
+                status_code=500,
+                detail="Output file was not created"
+            )
 
-        # Удаление временных файлов после отправки
-        background_tasks.add_task(os.remove, temp_filename)
-        background_tasks.add_task(os.remove, output_path)
+        # Schedule cleanup
+        background_tasks.add_task(cleanup, temp_filename, output_path)
 
-        # Возвращаем файл
         return FileResponse(
             output_path,
             media_type="image/jpeg",
             filename="processed_image.jpg"
         )
+
+    except HTTPException:
+        raise
     except Exception as e:
-        # Очистка при ошибке
-        if 'temp_filename' in locals() and os.path.exists(temp_filename):
-            os.remove(temp_filename)
-        if 'output_path' in locals() and os.path.exists(output_path):
-            os.remove(output_path)
-        raise HTTPException(500, str(e))
+        cleanup(temp_filename, output_path)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Image processing failed: {str(e)}"
+        ) from e
+
+
+def cleanup(*file_paths):
+    """Clean up temporary files."""
+    for path in file_paths:
+        if path and Path(path).exists():
+            try:
+                Path(path).unlink()
+            except OSError as e:
+                print(f"Error deleting file {path}: {e}")
