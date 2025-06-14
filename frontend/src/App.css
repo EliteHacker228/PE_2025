@@ -49,45 +49,45 @@
 }
 
 .pick-button {
-  background-color: rgb(93, 163, 80);
+  background-color: rgb(93 163 80);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgb(0 0 0 / 10%);
 }
 
 .pick-button:hover {
-  background-color: rgb(76, 133, 65);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background-color: rgb(76 133 65);
+  box-shadow: 0 6px 12px rgb(0 0 0 / 15%);
 }
 
 .pick-button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(93, 163, 80, 0.5);
+  box-shadow: 0 0 0 3px rgb(93 163 80 / 50%);
 }
 
 .pick-button:active {
-  background-color: rgb(56, 100, 49);
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgb(56 100 49);
+  box-shadow: inset 0 3px 5px rgb(0 0 0 / 20%);
 }
 
 .other-button {
-  background-color: rgb(120, 120, 120);
+  background-color: rgb(120 120 120);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgb(0 0 0 / 10%);
 }
 
 .other-button:hover {
-  background-color: rgb(86, 86, 86); 
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+  background-color: rgb(86 86 86); 
+  box-shadow: 0 6px 12px rgb(0 0 0 / 15%); 
 }
 
 .other-button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(120, 120, 120, 0.5);
+  box-shadow: 0 0 0 3px rgb(120 120 120 / 50%);
 }
 
 .other-button:active {
-  background-color: rgb(100, 100, 100);
-  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+  background-color: rgb(100 100 100);
+  box-shadow: inset 0 3px 5px rgb(0 0 0 / 20%);
 }
 
 @media (prefers-color-scheme: light) {
@@ -95,39 +95,42 @@
     color: #213547;
   }
   
-  .pick-button{
-    background-color: #92f08d;
-    box-shadow: 0 3px 6px rgba(33, 53, 71, 0.1);
+  .pick-button {
+    background-color: rgb(146 240 141);
+    box-shadow: 0 3px 6px rgb(33 53 71 / 10%);
   }
+
   .pick-button:hover {
-    background-color: #76d169;
-    box-shadow: 0 6px 12px rgba(33, 53, 71, 0.15);
+    background-color: rgb(118 209 105);
+    box-shadow: 0 6px 12px rgb(33 53 71 / 15%);
   }
+
   .pick-button:focus {
-    box-shadow: 0 0 0 3px rgba(146, 240, 141, 0.5);
+    box-shadow: 0 0 0 3px rgb(146 240 141 / 50%);
   }
+
   .pick-button:active {
-    background-color: #4fae51;
-    box-shadow: inset 0 3px 5px rgba(33, 53, 71, 0.2);
+    background-color: rgb(79 174 81);
+    box-shadow: inset 0 3px 5px rgb(33 53 71 / 20%);
   }
 
   .other-button {
-    background-color: #d1d1d1;
-    box-shadow: 0 3px 6px rgba(33, 53, 71, 0.1);
+    background-color: rgb(209 209 209);
+    box-shadow: 0 3px 6px rgb(33 53 71 / 10%);
   }
 
   .other-button:hover {
-    background-color: #d1d1d1; 
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+    background-color: rgb(209 209 209); 
+    box-shadow: 0 6px 12px rgb(0 0 0 / 15%);
   }
 
   .other-button:focus {
     outline: none;
-    box-shadow: 0 0 0 3px rgba(211, 210, 210, 0.5);
+    box-shadow: 0 0 0 3px rgb(211 210 210 / 50%);
   }
 
   .other-button:active {
-    background-color: rgb(170, 170, 170);
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+    background-color: rgb(170 170 170);
+    box-shadow: inset 0 3px 5px rgb(0 0 0 / 20%);
   }
 }
