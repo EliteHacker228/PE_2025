@@ -1,4 +1,3 @@
-import os
 import shutil
 import uuid
 from pathlib import Path
@@ -40,7 +39,7 @@ async def upload_file(
     except Exception as e:
         cleanup(temp_filename, output_path)
         raise HTTPException(
-            status_code=500, detail=f"Image processing failed: {str(e)}"
+            status_code=500, detail=f"Image processing failed: {e}"
         ) from e
 
 
