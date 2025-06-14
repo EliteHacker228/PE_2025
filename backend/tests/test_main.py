@@ -10,21 +10,28 @@ client = TestClient(app)
 
 def test_upload_invalid_file():
     response = client.post(
-        "/upload", files={"file": ("test.txt", b"not an image", "text/plain")}
+        "/detect-rotate/",
+        files={"file": ("test.txt", b"not an image", "text/plain")},
     )
-    assert response.status_code == 400
-    assert "Unsupported file type" in response.text
+    assert response.status_code == 500
+    assert "Image processing failed" in response.text
 
 
 def test_image_processing_flow(tmp_path):
     test_img = tmp_path / "test.jpg"
-    cv2.imwrite(str(test_img), np.zeros((100, 100, 3), dtype=np.uint8))
+    arr = np.zeros((100, 100, 3), dtype=np.uint8)
+    cv2.imwrite(str(test_img), arr)
 
     with open(test_img, "rb") as f:
-        response = client.post("/upload", files={"file": ("test.jpg", f, "image/jpeg")})
+        response = client.post(
+            "/detect-rotate/",
+            files={"file": ("test.jpg", f, "image/jpeg")},
+        )
 
     assert response.status_code == 200
-    assert "processed_image" in response.json()
+    # Проверяем, что ответ содержит бинарные данные изображения
+    assert response.content.startswith(b"\xff\xd8")
+    assert "content-disposition" in response.headers
 
 
 def test_response_format():
@@ -33,14 +40,11 @@ def test_response_format():
     test_img.seek(0)
 
     response = client.post(
-        "/upload", files={"file": ("test.jpg", test_img, "image/jpeg")}
+        "/detect-rotate/",
+        files={"file": ("test.jpg", test_img, "image/jpeg")},
     )
 
     assert response.status_code == 200
-    data = response.json()
-    assert "status" in data
-    assert "processed_image" in data
-    assert data["status"] == "success"
-    assert isinstance(data["processed_image"], str)
-    if "filename" in data:
-        assert isinstance(data["filename"], str)
+    # Проверяем бинарный ответ
+    assert response.content.startswith(b"\xff\xd8")
+    assert "content-disposition" in response.headers
