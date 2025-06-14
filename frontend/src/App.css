@@ -5,6 +5,15 @@
   text-align: center;
 }
 
+.reset-button {
+  background-color: #ccc;
+  color: #000;
+}
+
+.reset-button:hover {
+  background-color: #aaa;
+}
+
 .title {
   margin-bottom: 15rem;
 }
@@ -22,3 +31,103 @@
   font-weight: bold;
 }
 
+.download-ready {
+  margin-bottom: 1.5rem;
+}
+
+.file-button {
+  border: none;
+  padding: 12px 20px;
+  border-radius: 7px;
+  font-size: 15px;
+  color: white;
+  cursor: pointer;
+}
+
+.process-button {
+  margin-right: 1rem;
+}
+
+.pick-button {
+  background-color: rgb(93, 163, 80);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pick-button:hover {
+  background-color: rgb(76, 133, 65);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.pick-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(93, 163, 80, 0.5);
+}
+
+.pick-button:active {
+  background-color: rgb(56, 100, 49);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.other-button {
+  background-color: rgb(120, 120, 120);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.other-button:hover {
+  background-color: rgb(86, 86, 86); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+}
+
+.other-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(120, 120, 120, 0.5);
+}
+
+.other-button:active {
+  background-color: rgb(100, 100, 100);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-color-scheme: light) {
+  .file-button {
+    color: #213547;
+  }
+  
+  .pick-button{
+    background-color: #92f08d;
+    box-shadow: 0 3px 6px rgba(33, 53, 71, 0.1);
+  }
+  .pick-button:hover {
+    background-color: #76d169;
+    box-shadow: 0 6px 12px rgba(33, 53, 71, 0.15);
+  }
+  .pick-button:focus {
+    box-shadow: 0 0 0 3px rgba(146, 240, 141, 0.5);
+  }
+  .pick-button:active {
+    background-color: #4fae51;
+    box-shadow: inset 0 3px 5px rgba(33, 53, 71, 0.2);
+  }
+
+  .other-button {
+    background-color: #d1d1d1;
+    box-shadow: 0 3px 6px rgba(33, 53, 71, 0.1);
+  }
+
+  .other-button:hover {
+    background-color: #d1d1d1; 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+  }
+
+  .other-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(211, 210, 210, 0.5);
+  }
+
+  .other-button:active {
+    background-color: rgb(170, 170, 170);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.2);
+  }
+}
