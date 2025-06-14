@@ -13,19 +13,18 @@ router = APIRouter()
 
 @router.post("/detect-rotate/", response_class=FileResponse)
 async def upload_file(
-        file: UploadFile = File(...),
-        background_tasks: BackgroundTasks = BackgroundTasks(),
+    file: UploadFile = File(...),
+    background_tasks: BackgroundTasks = BackgroundTasks(),
 ):
     """Endpoint for image processing with automatic rotation detection."""
     temp_filename = f"temp_{uuid.uuid4().hex}.jpg"
     output_path = None
 
     try:
-        # Save temporary file using context manager
+        # Save temporary file
         with open(temp_filename, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
-        # Process the image
         output_path = process_image_file(temp_filename)
 
         if not Path(output_path).exists():
@@ -34,7 +33,6 @@ async def upload_file(
                 detail="Output file was not created"
             )
 
-        # Schedule cleanup
         background_tasks.add_task(cleanup, temp_filename, output_path)
 
         return FileResponse(
