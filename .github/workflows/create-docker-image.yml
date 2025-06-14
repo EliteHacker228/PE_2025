@@ -6,8 +6,8 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_BACKEND: ghcr.io/elitehacker228/pe_2025/backend
-  IMAGE_FRONTEND: ghcr.io/elitehacker228/pe_2025/frontend
+  IMAGE_BACKEND: ghcr.io/elitehacker228/pe-2025-backend
+  IMAGE_FRONTEND: ghcr.io/elitehacker228/pe-2025-frontend
 
 jobs:
   build-and-push:
