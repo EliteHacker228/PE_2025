@@ -2,7 +2,13 @@ import shutil
 import uuid
 from pathlib import Path
 
-from fastapi import APIRouter, UploadFile, File, BackgroundTasks, HTTPException
+from fastapi import (
+    APIRouter,
+    UploadFile,
+    File,
+    BackgroundTasks,
+    HTTPException,
+)
 from fastapi.responses import FileResponse
 
 from app.services.detector import process_image_file
@@ -26,12 +32,21 @@ async def upload_file(
         output_path = process_image_file(temp_filename)
 
         if not Path(output_path).exists():
-            raise HTTPException(status_code=500, detail="Output file was not created")
+            raise HTTPException(
+                status_code=500,
+                detail="Output file was not created",
+            )
 
-        background_tasks.add_task(cleanup, temp_filename, output_path)
+        background_tasks.add_task(
+            cleanup,
+            temp_filename,
+            output_path,
+        )
 
         return FileResponse(
-            output_path, media_type="image/jpeg", filename="processed_image.jpg"
+            output_path,
+            media_type="image/jpeg",
+            filename="processed_image.jpg",
         )
 
     except HTTPException:
@@ -39,7 +54,8 @@ async def upload_file(
     except Exception as e:
         cleanup(temp_filename, output_path)
         raise HTTPException(
-            status_code=500, detail=f"Image processing failed: {e}"
+            status_code=500,
+            detail=f"Image processing failed: {e}",
         ) from e
 
 
