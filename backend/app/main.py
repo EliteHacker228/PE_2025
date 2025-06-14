@@ -11,26 +11,6 @@ app = FastAPI(
 )
 
 
-@app.post("/upload")
-async def upload_file(file: UploadFile = File(...)):
-    if not file.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="Unsupported file type")
-
-    temp_path = f"temp_{file.filename}"
-    with open(temp_path, "wb") as buffer:
-        buffer.write(await file.read())
-
-    try:
-        result_path = process_image_file(temp_path)
-        return {
-            "status": "success",
-            "processed_image": result_path,
-            "filename": file.filename,
-        }
-    finally:
-        if os.path.exists(temp_path):
-            os.remove(temp_path)
-
 
 app.add_middleware(
     CORSMiddleware,
