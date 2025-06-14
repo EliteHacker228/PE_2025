@@ -8,7 +8,7 @@ from app.services.detector import process_image_file
 router = APIRouter()
 
 
-@router.post("/upload", response_class=FileResponse)  # Убедитесь что это FileResponse
+@router.post("/detect-rotate/", response_class=FileResponse)  # Убедитесь что это FileResponse
 async def upload_file(
         file: UploadFile = File(...),
         background_tasks: BackgroundTasks = BackgroundTasks()
