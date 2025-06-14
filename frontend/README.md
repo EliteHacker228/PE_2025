@@ -1,54 +1,103 @@
-# React + TypeScript + Vite
+# Обработка файлов: распознование таблиц и угла наклона
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Описание
 
-Currently, two official plugins are available:
+Этот фронтенд — веб-интерфейс для взаимодействия с backend-сервисом на FastAPI, использующим модель машинного обучения для распознавания таблиц и поворота угла изображения. Основной эндпоинт API — `POST /detect-rotate`, на который отправляется изображение, и в ответ возвращается обработанный файл.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Стек
 
-## Expanding the ESLint configuration
+* **Vite** — сборщик проекта
+* **React 19 + TypeScript** — UI
+* **CSS** — стилизация
+* **Vitest + Testing Library** — модульные тесты
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Сценарий использования
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1. Пользователь запускает интерфейс и видит заголовок.
+2. Нажимает кнопку "Выбрать файл", чтобы выбрать изображение (например, с таблицей).
+3. После выбора появляется кнопка "Обработать" и "Выбрать другой файл".
+4. После нажатия "Обработать" начинается загрузка и отправка изображения на сервер.
+5. После завершения обработки отображается кнопка для скачивания готового файла.
+6. В любой момент пользователь может сбросить и выбрать другой файл.
+
+## Структура проекта
+
+```
+src/
+├── App.css                 // Стили основного компонента App
+├── App.tsx                 // Основной компонент приложения
+├── App.test.tsx            // Тесты для App.tsx
+├── assets/
+│   └── react.svg
+├── components/             // Переиспользуемые компоненты
+│   ├── DownloadReady.tsx          // Компонент кнопки скачивания
+│   ├── DownloadReady.test.tsx     // Тесты для DownloadReady
+│   ├── FilePicker.tsx             // Компонент выбора файла
+│   ├── FilePicker.test.tsx        // Тесты для FilePicker
+│   ├── ProcessingIndicator.tsx    // Компонент индикатора обработки
+│   ├── ProcessingIndicator.test.tsx
+│   └── ProcessingIndicator.css    // Стили для индикатора обработки
+├── index.css
+├── main.tsx               // Точка входа
+├── setupTests.ts          // Конфигурация Vitest
+└── vite-env.d.ts
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Описание компонентов
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### `App.tsx`
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+Главный компонент, управляющий состоянием и взаимодействием с API. Подключает и координирует все остальные компоненты:
+
+* `FilePicker` — отображается, когда файл не выбран
+* `ProcessingIndicator` — отображается во время обработки
+* `DownloadReady` — отображается после успешной обработки файла
+
+### `FilePicker.tsx`
+
+Компонент для выбора файла. Скрытый `<input type="file">` вызывается кнопкой "Выбрать файл". После выбора вызывает `onFileSelect(file)`.
+
+### `ProcessingIndicator.tsx`
+
+Простой индикатор загрузки (анимация и надпись "Идёт обработка файла..."). Используется при `isProcessing = true`.
+
+### `DownloadReady.tsx`
+
+Отображает сообщение "Файл готов!" и кнопку для скачивания обработанного файла. Принимает `downloadUrl` и `filename`.
+
+## Скрипты
+
+```bash
+npm install       # Установка
+npm run dev       # Запустить локальный dev-сервер
+npm run build     # Собрать production-версию
+npm run preview   # Предпросмотр production-сборки
+npm run test      # Запустить тесты (Vitest)
 ```
+
+## Тесты
+
+Покрытие тестами реализовано для всех компонентов с использованием:
+
+* `@testing-library/react`
+* `vitest`
+
+Примеры тестов включают:
+
+* Проверка отображения текста и кнопок
+* Загрузка файла
+* Обработка файла и получение результата
+
+## API-интеграция
+
+Файл отправляется POST-запросом на:
+
+```
+POST http://localhost:8000/detect-rotate/
+```
+
+Тело запроса — `multipart/form-data` с полем `file`. Ответ — `Blob`, преобразуемый в URL для скачивания.
+
+---
+
+Если необходимо дополнить документацию секцией про деплой, CI/CD или использование FastAPI — дай знать.
