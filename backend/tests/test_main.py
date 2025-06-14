@@ -43,6 +43,4 @@ def test_response_format():
     assert data["status"] == "success"
     assert isinstance(data["processed_image"], str)
     if "filename" in data:
-        assert isinstance(
-            data["filename"], str
-        )  
+        assert isinstance(data["filename"], str)
