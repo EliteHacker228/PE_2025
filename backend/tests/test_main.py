@@ -10,7 +10,8 @@ client = TestClient(app)
 
 def test_upload_invalid_file():
     response = client.post(
-        "/upload", files={"file": ("test.txt", b"not an image", "text/plain")}
+        "/upload",
+        files={"file": ("test.txt", b"not an image", "text/plain")}
     )
     assert response.status_code == 400
     assert "Unsupported file type" in response.text
@@ -18,10 +19,16 @@ def test_upload_invalid_file():
 
 def test_image_processing_flow(tmp_path):
     test_img = tmp_path / "test.jpg"
-    cv2.imwrite(str(test_img), np.zeros((100, 100, 3), dtype=np.uint8))
+    cv2.imwrite(
+        str(test_img),
+        np.zeros((100, 100, 3), dtype=np.uint8)
+    )
 
     with open(test_img, "rb") as f:
-        response = client.post("/upload", files={"file": ("test.jpg", f, "image/jpeg")})
+        response = client.post(
+            "/upload",
+            files={"file": ("test.jpg", f, "image/jpeg")}
+        )
 
     assert response.status_code == 200
     assert "processed_image" in response.json()
@@ -33,7 +40,8 @@ def test_response_format():
     test_img.seek(0)
 
     response = client.post(
-        "/upload", files={"file": ("test.jpg", test_img, "image/jpeg")}
+        "/upload",
+        files={"file": ("test.jpg", test_img, "image/jpeg")}
     )
 
     assert response.status_code == 200
