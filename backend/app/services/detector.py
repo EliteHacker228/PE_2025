@@ -31,6 +31,9 @@ def rotate_image(image, angle):
 
 def process_image_file(image_path: str) -> str:
     image = cv2.imread(image_path)
+    if image is None:
+        raise FileNotFoundError(f"File not found or cannot be read: {image_path}")
+
     results = model(image)
 
     angle = 0
@@ -44,3 +47,4 @@ def process_image_file(image_path: str) -> str:
     output_path = os.path.join(RESULTS_DIR, f"rotated_{filename}")
     cv2.imwrite(output_path, rotated)
     return output_path
+    
