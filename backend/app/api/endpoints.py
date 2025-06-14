@@ -59,3 +59,4 @@ def cleanup(*file_paths):
                 Path(path).unlink()
             except OSError as e:
                 print(f"Error deleting file {path}: {e}")
+                
