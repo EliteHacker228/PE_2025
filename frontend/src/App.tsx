@@ -10,6 +10,8 @@ export function App() {
   const [isReady, setIsReady] = useState(false)
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null)
 
+  const apiUrl = import.meta.env.VITE_API_URL
+
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile)
     setIsProcessing(false)
@@ -28,7 +30,7 @@ export function App() {
     formData.append('file', file)
 
     try {
-      const response = await fetch('http://localhost:8000/detect-rotate/', {
+      const response = await fetch(`${apiUrl}/detect-rotate/`, {
         method: 'POST',
         body: formData
       })
