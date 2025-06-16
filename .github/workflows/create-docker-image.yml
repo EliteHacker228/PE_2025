@@ -8,6 +8,9 @@ env:
   REGISTRY: ghcr.io
   IMAGE_BACKEND: ghcr.io/elitehacker228/pe-2025-backend
   IMAGE_FRONTEND: ghcr.io/elitehacker228/pe-2025-frontend
+  DEPLOY_SERVER_IP: 158.160.162.140
+  DEPLOY_USER: max
+  DEPLOY_PATH: /home/max
 
 jobs:
   build-and-push:
@@ -43,3 +46,24 @@ jobs:
           context: ./frontend
           push: true
           tags: ${{ env.IMAGE_FRONTEND }}:latest
+
+      - name: Copy docker-compose.yml to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ env.DEPLOY_SERVER_IP }}
+          username: ${{ env.DEPLOY_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: docker-compose.yml
+          target: ${{ env.DEPLOY_PATH }}
+
+      - name: Deploy containers on server
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ env.DEPLOY_SERVER_IP }}
+          username: ${{ env.DEPLOY_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ env.DEPLOY_PATH }}
+            docker-compose down
+            docker-compose pull
+            docker-compose up -d
