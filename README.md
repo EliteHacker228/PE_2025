@@ -4,6 +4,10 @@
 
 http://158.160.162.140:5173/
 
+Изображения для проверки сервиса:
+
+[Сканы](./report/test_data)
+
 ### Что было реализовано:
 - Модель, определяющая таблицу на скане и угол её поворота (взята с прошлого семестра)
 - Backend, написан на Python
@@ -15,11 +19,11 @@ http://158.160.162.140:5173/
 
 ### Описание Backend
 
-[см. описание Backend](https://github.com/EliteHacker228/PE_2025/tree/main/backend)
+[см. описание Backend](./backend)
 
 ### Описание Frontend
 
-[см. описание Frontend](https://github.com/EliteHacker228/PE_2025/tree/main/frontend)
+[см. описание Frontend](./frontend)
 
 ### Как работает сервис?
 
